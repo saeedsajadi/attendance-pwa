@@ -96,6 +96,23 @@ const DateUtils = (function() {
     return String(str).replace(/[0-9]/g, w => persian[+w]);
   }
 
+  function toEnglishDigits(str) {
+    const persianToEnglishMap = {
+        '۰': '0',
+        '۱': '1',
+        '۲': '2',
+        '۳': '3',
+        '۴': '4',
+        '۵': '5',
+        '۶': '6',
+        '۷': '7',
+        '۸': '8',
+        '۹': '9'
+    };
+
+    return String(str).replace(/[۰-۹]/g, (w) => persianToEnglishMap[w] || w);
+  }
+
   function getCurrentTime() {
     const m = ensureMoment();
     return m().format('HH:mm:ss');
@@ -111,7 +128,7 @@ const DateUtils = (function() {
     formatJalali, parseJalali, getDayName,
     getMonthName, isValidJalali, isFutureDate,
     isSameDay, diffMinutes, formatDuration,
-    toPersianDigits, getCurrentTime, addDaysToJalali,
+    toPersianDigits, toEnglishDigits, getCurrentTime, addDaysToJalali,
     persianMonths, persianDays, persianDaysShort
   };
 })();

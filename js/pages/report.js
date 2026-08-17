@@ -29,8 +29,8 @@
   }
 
   function generateReport() {
-    const fromDate = document.getElementById('report-from').value;
-    const toDate = document.getElementById('report-to').value;
+    const fromDate = DateUtils.toEnglishDigits(document.getElementById('report-from').value);
+    const toDate = DateUtils.toEnglishDigits(document.getElementById('report-to').value);
 
     if (!fromDate || !toDate) {
       UI.toast('لطفاً بازه تاریخ را مشخص کنید', 'error');
