@@ -123,7 +123,11 @@ const DB = (function() {
       const m = moment(r.date, 'jYYYY/jMM/jDD');
       const from = moment(fromDate, 'jYYYY/jMM/jDD');
       const to = moment(toDate, 'jYYYY/jMM/jDD');
-      const inRange = m.isBetween(from, to, 'day', '[]');
+      
+      const afterFrom = m.isSameOrAfter(from, 'day');
+      const beforeTo = m.isSameOrBefore(to, 'day');
+      const inRange = afterFrom && beforeTo;
+      
       const typeMatch = types.length === 0 || types.includes(r.type);
       return inRange && typeMatch;
     });

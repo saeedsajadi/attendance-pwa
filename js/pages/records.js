@@ -37,12 +37,10 @@
 
     let records = DB.getAll();
 
-    // Filter by type
     if (currentFilter !== 'all') {
       records = records.filter(r => r.type === currentFilter);
     }
 
-    // Search
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
       records = records.filter(r => 
@@ -51,7 +49,6 @@
       );
     }
 
-    // Sort by date desc
     records.sort((a, b) => {
       const ma = moment(a.date, 'jYYYY/jMM/jDD');
       const mb = moment(b.date, 'jYYYY/jMM/jDD');
@@ -68,7 +65,6 @@
       return;
     }
 
-    // Group by date
     const groups = {};
     records.forEach(r => {
       if (!groups[r.date]) groups[r.date] = [];
@@ -152,6 +148,18 @@
     });
   }
 
+  function initEditDatepicker() {
+    if (typeof $ === 'undefined') return;
+    const $input = $('#edit-date');
+    try { $input.pDatepicker('destroy'); } catch(e) {}
+    $input.pDatepicker({
+      format: 'YYYY/MM/DD',
+      autoClose: true,
+      initialValue: false,
+      position: 'auto'
+    });
+  }
+
   function openEdit(id) {
     const record = DB.getById(id);
     if (!record) return;
@@ -171,6 +179,9 @@
     }
 
     UI.openModal('edit-modal');
+
+    // Initialize datepicker AFTER modal is visible
+    setTimeout(initEditDatepicker, 50);
   }
 
   function setupEditModal() {
@@ -215,7 +226,6 @@
     });
   }
 
-  // Expose for inline onclick
   window.RecordsPage = { openEdit, deleteRecord };
 
   if (document.readyState === 'loading') {
