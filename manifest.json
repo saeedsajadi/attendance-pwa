@@ -1,0 +1,20 @@
+{
+  "id": "attendance-pwa-v1",
+  "name": "سیستم حضور و غیاب شخصی",
+  "short_name": "حضور و غیاب",
+  "description": "ثبت و مدیریت ساعات کاری، مرخصی و ماموریت",
+  "start_url": "index.html",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#6366f1",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect fill='%236366f1' width='512' height='512' rx='128'/%3E%3Ccircle cx='256' cy='256' r='160' fill='none' stroke='white' stroke-width='24' opacity='0.9'/%3E%3Ccircle cx='256' cy='256' r='12' fill='white'/%3E%3Cline x1='256' y1='256' x2='256' y2='140' stroke='white' stroke-width='20' stroke-linecap='round'/%3E%3Cline x1='256' y1='256' x2='336' y2='256' stroke='white' stroke-width='16' stroke-linecap='round'/%3E%3Cline x1='256' y1='256' x2='220' y2='340' stroke='white' stroke-width='12' stroke-linecap='round' opacity='0.6'/%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="theme-color" content="#6366f1" />
+    <title>گزارش حضور و غیاب</title>
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="apple-touch-icon" href="./assets/logo.svg" />
+    <link rel="icon" type="image/svg+xml" href="./assets/logo.svg" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/css/persian-datepicker.min.css"
+    />
+    <link rel="stylesheet" href="./css/main.css" />
+    <link rel="stylesheet" href="./css/components.css" />
+    <style>
+      @media print {
+        .print-header {
+          display: block !important;
+          text-align: center;
+          margin-bottom: 1rem;
+        }
+        .print-header h2 {
+          font-size: 14pt;
+          color: #1f2937;
+          margin: 0;
+        }
+        .print-header p {
+          font-size: 10pt;
+          color: #6b7280;
+          margin: 0.25rem 0 0;
+        }
+      }
+      @media screen {
+        .print-header {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-container">
+      <div class="page-header no-print">
+        <h1 class="page-title">
+          <i class="fas fa-file-alt" style="margin-left: 0.5rem"></i>گزارش
+        </h1>
+        <button class="menu-btn" id="menu-btn-report">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+
+      <div class="glass-card no-print" style="margin-bottom: 1rem">
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+          "
+        >
+          <div class="form-group" style="margin: 0">
+            <label class="form-label" style="color: white">از تاریخ</label>
+            <input
+              type="text"
+              id="report-from"
+              class="form-input"
+              placeholder="۱۴۰۳/۰۱/۰۱"
+              readonly
+            />
+          </div>
+          <div class="form-group" style="margin: 0">
+            <label class="form-label" style="color: white">تا تاریخ</label>
+            <input
+              type="text"
+              id="report-to"
+              class="form-input"
+              placeholder="۱۴۰۳/۱۲/۲۹"
+              readonly
+            />
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0.75rem">
+          <label class="form-label" style="color: white">نوع رکورد</label>
+          <div class="checkbox-group" id="report-types">
+            <label class="checkbox-item"
+              ><input type="checkbox" value="work" checked /> کار</label
+            >
+            <label class="checkbox-item"
+              ><input type="checkbox" value="hourly_leave" /> مرخصی ساعتی</label
+            >
+            <label class="checkbox-item"
+              ><input type="checkbox" value="daily_leave" /> مرخصی روزانه</label
+            >
+            <label class="checkbox-item"
+              ><input type="checkbox" value="mission" /> ماموریت</label
+            >
+            <label class="checkbox-item"
+              ><input type="checkbox" value="overtime" /> اضافه‌کاری</label
+            >
+          </div>
+        </div>
+
+        <button
+          class="btn btn-primary"
+          id="generate-report"
+          style="width: 100%"
+        >
+          <i class="fas fa-filter"></i> اعمال فیلتر
+        </button>
+      </div>
+
+      <div id="report-results" style="display: none">
+        <div class="print-header">
+          <h2>گزارش حضور و غیاب</h2>
+          <p id="print-range">بازه: -</p>
+        </div>
+
+        <div class="report-table-container">
+          <table class="report-table">
+            <thead>
+              <tr>
+                <th>تاریخ</th>
+                <th>روز</th>
+                <th>نوع</th>
+                <th>ورود</th>
+                <th>خروج</th>
+                <th>مدت</th>
+                <th>توضیحات</th>
+              </tr>
+            </thead>
+            <tbody id="report-tbody"></tbody>
+          </table>
+          <div class="report-summary" id="report-summary"></div>
+        </div>
+
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.75rem;
+            margin-top: 1rem;
+          "
+          class="no-print"
+        >
+          <button class="btn btn-success" id="btn-excel">
+            <i class="fas fa-file-excel"></i> اکسل
+          </button>
+          <button class="btn btn-info" id="btn-share">
+            <i class="fas fa-share-alt"></i> اشتراک
+          </button>
+          <button class="btn btn-outline" id="btn-print">
+            <i class="fas fa-print"></i> پرینت
+          </button>
+        </div>
+      </div>
+
+      <div id="report-empty" class="empty-state no-print">
+        <i class="fas fa-filter"></i>
+        <p>بازه تاریخ و نوع رکورد را انتخاب کنید</p>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment-jalaali@0.9.2/build/moment-jalaali.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/persian-date@1.1.0/dist/persian-date.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/js/persian-datepicker.min.js"></script>
+    <script src="./js/date-utils.js"></script>
+    <script src="./js/db.js"></script>
+    <script src="./js/ui.js"></script>
+    <script src="./js/app.js"></script>
+    <script src="./js/pages/report.js"></script>
+  </body>
+</html>
