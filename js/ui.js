@@ -53,7 +53,7 @@ const UI = (function() {
           </div>
           <div>
             <div style="color:white;font-weight:700;">حضور و غیاب</div>
-            <div style="color:rgba(255,255,255,0.7);font-size:0.75rem;">نسخه ۱.۰</div>
+            <div style="color:rgba(255,255,255,0.7);font-size:0.75rem;">نسخه 1.0.1</div>
           </div>
         </div>
         <button class="menu-btn" id="close-menu" style="width:36px;height:36px;">
