@@ -9,24 +9,26 @@
 
   function registerSW() {
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./sw.js')
+      navigator.serviceWorker.register('./sw.js?v=2')
         .then(reg => {
           console.log('SW registered:', reg.scope);
-          reg.update();
           reg.addEventListener('updatefound', () => {
             const newWorker = reg.installing;
             newWorker.addEventListener('statechange', () => {
               if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
                 newWorker.postMessage({ type: 'SKIP_WAITING' });
-                window.location.reload();
               }
             });
           });
         })
         .catch(err => console.error('SW registration failed:', err));
 
+      let refreshing = false;
       navigator.serviceWorker.addEventListener('controllerchange', () => {
-        window.location.reload();
+        if (!refreshing) {
+          refreshing = true;
+          window.location.reload();
+        }
       });
     }
   }
