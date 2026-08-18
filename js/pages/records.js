@@ -151,7 +151,6 @@
   function initEditDatepicker() {
     if (typeof $ === 'undefined') return;
     const $input = $('#edit-date');
-    try { $input.pDatepicker('destroy'); } catch(e) {}
     $input.pDatepicker({
       format: 'YYYY/MM/DD',
       autoClose: true,

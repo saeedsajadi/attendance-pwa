@@ -9,7 +9,7 @@
 
   function registerSW() {
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./sw.js?v=2')
+      navigator.serviceWorker.register('./sw.js?v=3')
         .then(reg => {
           console.log('SW registered:', reg.scope);
           reg.addEventListener('updatefound', () => {
