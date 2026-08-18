@@ -197,6 +197,7 @@
     if (saveBtn) {
       saveBtn.addEventListener('click', () => {
         const id = document.getElementById('edit-id').value;
+        const date = DateUtils.toEnglishDigits(document.getElementById('edit-date').value);
         const type = document.getElementById('edit-type').value;
         const checkIn = document.getElementById('edit-checkin').value || null;
         const checkOut = document.getElementById('edit-checkout').value || null;
@@ -210,7 +211,7 @@
           }
         }
 
-        DB.update(id, { type, checkIn, checkOut, description });
+        DB.update(id, { type, date, checkIn, checkOut, description });
         UI.closeModal('edit-modal');
         UI.toast('رکورد با موفقیت ویرایش شد', 'success');
         renderRecords();
