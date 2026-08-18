@@ -1,4 +1,4 @@
-const CACHE_NAME = 'attendance-v2-cache-v7';
+const CACHE_NAME = 'attendance-v2-cache-v8';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -31,6 +31,12 @@ const CDN_ASSETS = [
 ];
 
 const ALL_ASSETS = [...STATIC_ASSETS, ...CDN_ASSETS];
+
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
